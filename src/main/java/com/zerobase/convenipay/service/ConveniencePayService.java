@@ -4,30 +4,31 @@ import com.zerobase.convenipay.dto.PayCancelRequest;
 import com.zerobase.convenipay.dto.PayCancelResponse;
 import com.zerobase.convenipay.dto.PayRequest;
 import com.zerobase.convenipay.dto.PayResponse;
-import com.zerobase.convenipay.type.MoneyUseCancelResult;
-import com.zerobase.convenipay.type.MoneyUseResult;
-import com.zerobase.convenipay.type.PayCancelResult;
-import com.zerobase.convenipay.type.PayResult;
+import com.zerobase.convenipay.type.*;
 
 public class ConveniencePayService {    // 편결이
     private final MoneyAdapter moneyAdapter = new MoneyAdapter();
+    private final CardAdapter cardAdapter = new CardAdapter();
 
     public PayResponse pay(PayRequest payRequest) {
-        MoneyUseResult moneyUseResult = moneyAdapter.use(payRequest.getPayAmount());
+        CardUseResult cardUseResult;
+        MoneyUseResult moneyUseResult;
+
+        if (payRequest.getPayMethodType() == PayMethodType.CARD) {
+            cardAdapter.authorization();
+            cardAdapter.approval();
+            cardUseResult = cardAdapter.capture(PayRequest.getPayAmount());
+        } else {
+            moneyUseResult = moneyAdapter.use(PayRequest.getPayAmount());
+        }
 
         // fail fast
-
-        // Method()
-
-        // Exception case1
-        // Exception case2
-        // Exception case3
         if (moneyUseResult == MoneyUseResult.USE_FAIL) {
             return new PayResponse(PayResult.FAIL, 0);
         }
 
         // Success Case(Only one)
-        return new PayResponse(PayResult.SUCCESS, payRequest.getPayAmount());
+        return new PayResponse(PayResult.SUCCESS, PayRequest.getPayAmount());
     }
 
     public PayCancelResponse payCancel(PayCancelRequest payCancelRequest) {
