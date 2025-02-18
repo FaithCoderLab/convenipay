@@ -1,4 +1,4 @@
-package com.zerobase.convenipay.dto;
+package com.zerobase.convenipay.type;
 
 public enum PayResult {
     SUCCESS,

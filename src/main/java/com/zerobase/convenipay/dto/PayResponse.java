@@ -1,5 +1,7 @@
 package com.zerobase.convenipay.dto;
 
+import com.zerobase.convenipay.type.PayResult;
+
 public class PayResponse {
     // 결제 결과
     PayResult payResult;
