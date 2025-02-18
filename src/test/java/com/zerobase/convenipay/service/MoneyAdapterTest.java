@@ -1,9 +1,11 @@
 package com.zerobase.convenipay.service;
 
+import com.zerobase.convenipay.type.MoneyUseCancelResult;
+import com.zerobase.convenipay.type.MoneyUseResult;
 import org.junit.jupiter.api.Test;
 
-import static com.zerobase.convenipay.service.MoneyUseResult.USE_FAIL;
-import static com.zerobase.convenipay.service.MoneyUseResult.USE_SUCCESS;
+import static com.zerobase.convenipay.type.MoneyUseResult.USE_FAIL;
+import static com.zerobase.convenipay.type.MoneyUseResult.USE_SUCCESS;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MoneyAdapterTest {
@@ -31,5 +33,29 @@ class MoneyAdapterTest {
 
         // then
         assertEquals(USE_SUCCESS, moneyUseResult);
+    }
+
+    @Test
+    void money_use_cancel_success() {
+        // given
+        Integer payCancelAmount = 101;
+
+        // when
+        MoneyUseCancelResult moneyUseCancelResult = moneyAdapter.useCancel(payCancelAmount);
+
+        // then
+        assertEquals(MoneyUseCancelResult.MONEY_USE_CANCEL_SUCCESS, moneyUseCancelResult);
+    }
+
+    @Test
+    void money_use_cancel_failure() {
+        // given
+        Integer payCancelAmount = 99;
+
+        // when
+        MoneyUseCancelResult moneyUseCancelResult = moneyAdapter.useCancel(payCancelAmount);
+
+        // then
+        assertEquals(MoneyUseCancelResult.MONEY_USE_CANCEL_FAILED, moneyUseCancelResult);
     }
 }

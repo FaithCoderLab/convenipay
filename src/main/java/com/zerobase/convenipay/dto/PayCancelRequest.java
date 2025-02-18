@@ -22,7 +22,7 @@ public class PayCancelRequest {
         this.convenienceType = convenienceType;
     }
 
-    public static Integer getPayCancelAmount() {
+    public Integer getPayCancelAmount() {
         return payCancelAmount;
     }
 

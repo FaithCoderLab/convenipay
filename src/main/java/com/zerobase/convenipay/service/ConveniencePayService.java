@@ -4,7 +4,9 @@ import com.zerobase.convenipay.dto.PayCancelRequest;
 import com.zerobase.convenipay.dto.PayCancelResponse;
 import com.zerobase.convenipay.dto.PayRequest;
 import com.zerobase.convenipay.dto.PayResponse;
+import com.zerobase.convenipay.type.MoneyUseCancelResult;
 import com.zerobase.convenipay.type.MoneyUseResult;
+import com.zerobase.convenipay.type.PayCancelResult;
 import com.zerobase.convenipay.type.PayResult;
 
 public class ConveniencePayService {    // 편결이
@@ -29,5 +31,12 @@ public class ConveniencePayService {    // 편결이
     }
 
     public PayCancelResponse payCancel(PayCancelRequest payCancelRequest) {
+        MoneyUseCancelResult moneyUseCancelResult = moneyAdapter.useCancel(payCancelRequest.getPayCancelAmount());
+
+        if (moneyUseCancelResult == MoneyUseCancelResult.MONEY_USE_CANCEL_FAILED) {
+            return new PayCancelResponse(PayCancelResult.PAY_CANCEL_FAILED, 0);
+        }
+        return new PayCancelResponse(PayCancelResult.PAY_CANCEL_SUCCESS,
+                payCancelRequest.getPayCancelAmount());
     }
 }
