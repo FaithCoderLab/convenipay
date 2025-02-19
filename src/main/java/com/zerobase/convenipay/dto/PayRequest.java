@@ -35,7 +35,7 @@ public class PayRequest {
         this.convenienceType = convenienceType;
     }
 
-    public static Integer getPayAmount() {
+    public Integer getPayAmount() {
         return payAmount;
     }
 

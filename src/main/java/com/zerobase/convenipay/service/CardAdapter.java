@@ -2,8 +2,10 @@ package com.zerobase.convenipay.service;
 
 import com.zerobase.convenipay.type.CardUseCancelResult;
 import com.zerobase.convenipay.type.CardUseResult;
+import com.zerobase.convenipay.type.PaymentCancelResult;
+import com.zerobase.convenipay.type.PaymentResult;
 
-public class CardAdapter {
+public class CardAdapter implements PaymentInterface {
     // 1. 인증
     public void authorization() {
         System.out.println("authorization success");
@@ -30,5 +32,27 @@ public class CardAdapter {
         }
 
         return CardUseCancelResult.USE_CANCEL_SUCCESS;
+    }
+
+    @Override
+    public PaymentResult payment(Integer payAmount) {
+        authorization();
+        approval();
+        CardUseResult cardUseResult = capture(payAmount);
+
+        if (cardUseResult == CardUseResult.USE_FAIL) {
+            return PaymentResult.PAYMENT_FAIL;
+        }
+
+        return PaymentResult.PAYMENT_SUCCESS;
+    }
+
+    @Override
+    public PaymentCancelResult cancelPayment(Integer cancelAmount) {
+        CardUseCancelResult cardUseCancelResult = cancelCapture(cancelAmount);
+        if (cardUseCancelResult == CardUseCancelResult.USE_CANCEL_FAIL) {
+            return PaymentCancelResult.PAYMENT_CANCEL_FAIL;
+        }
+        return PaymentCancelResult.PAYMENT_CANCEL_SUCCESS;
     }
 }
