@@ -5,6 +5,7 @@ import com.zerobase.convenipay.dto.PayCancelResponse;
 import com.zerobase.convenipay.dto.PayRequest;
 import com.zerobase.convenipay.dto.PayResponse;
 import com.zerobase.convenipay.service.ConveniencePayService;
+import com.zerobase.convenipay.service.DiscountInterface;
 import com.zerobase.convenipay.type.ConvenienceType;
 import com.zerobase.convenipay.type.PayMethodType;
 
