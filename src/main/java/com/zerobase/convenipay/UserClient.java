@@ -1,5 +1,6 @@
 package com.zerobase.convenipay;
 
+import com.zerobase.convenipay.config.ApplicationConfig;
 import com.zerobase.convenipay.dto.PayCancelRequest;
 import com.zerobase.convenipay.dto.PayCancelResponse;
 import com.zerobase.convenipay.dto.PayRequest;
@@ -8,11 +9,20 @@ import com.zerobase.convenipay.service.ConveniencePayService;
 import com.zerobase.convenipay.service.DiscountInterface;
 import com.zerobase.convenipay.type.ConvenienceType;
 import com.zerobase.convenipay.type.PayMethodType;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class UserClient {
     public static void main(String[] args) {
         // 사용자 -> 편결이 -> 머니
-        ConveniencePayService conveniencePayService = new ConveniencePayService();
+        ApplicationContext applicationContext =
+                new AnnotationConfigApplicationContext(ApplicationConfig.class);
+
+        ConveniencePayService conveniencePayService =
+                applicationContext.getBean(
+                        "conveniencePayService",
+                        ConveniencePayService.class
+                );
 
         // 결제 1000원
         PayRequest payRequest = new PayRequest(

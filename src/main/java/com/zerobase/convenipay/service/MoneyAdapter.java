@@ -1,9 +1,6 @@
 package com.zerobase.convenipay.service;
 
-import com.zerobase.convenipay.type.MoneyUseCancelResult;
-import com.zerobase.convenipay.type.MoneyUseResult;
-import com.zerobase.convenipay.type.PaymentCancelResult;
-import com.zerobase.convenipay.type.PaymentResult;
+import com.zerobase.convenipay.type.*;
 
 public class MoneyAdapter implements PaymentInterface {
     public MoneyUseResult use(Integer amount) {
@@ -24,6 +21,11 @@ public class MoneyAdapter implements PaymentInterface {
         }
 
         return MoneyUseCancelResult.MONEY_USE_CANCEL_SUCCESS;
+    }
+
+    @Override
+    public PayMethodType getPayMethodType() {
+        return null;
     }
 
     @Override
